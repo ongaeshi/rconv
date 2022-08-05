@@ -1,6 +1,11 @@
-# Ruby on Browser
-Ruby on Browser using Ruby WASM/WASI.
+# Rconv
+https://rconv.ongaeshi.me
 
-https://rubyonbrowser.ongaeshi.me
+## Build
 
-
+```
+$ git clone https://github.com/ongaeshi/rconv.git
+$ cd rconv
+$ npm install
+$ npm run serve
+```
