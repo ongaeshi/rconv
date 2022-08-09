@@ -71,8 +71,7 @@ export const runRubyScriptsInHtml = function () {
 
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
-    console.log(input2.value);
-    const result = browserVm.vm.eval(codeEditor.getValue());
+    const result = browserVm.vm.eval(codeEditor.getValue() + `; f("${input2.value}")`);
 
     if (outputBuffer.length == 0) {
       outputTextArea.value = result.toString()
