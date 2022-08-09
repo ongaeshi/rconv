@@ -53,7 +53,6 @@ const main = async () => {
 
   document.getElementById("run").onclick = runRubyScriptsInHtml;
   document.getElementById("clear").onclick = selectAllScripts;
-  document.getElementById("files").onclick = listFiles;
 
   codeEditor.focus();
 
@@ -71,6 +70,8 @@ export const runRubyScriptsInHtml = function () {
     history.replaceState('', '', "?" + urlParams.toString());
 
     // Run eval
+    const input2 = <HTMLTextAreaElement>document.getElementById("input2");
+    console.log(input2.value);
     const result = browserVm.vm.eval(codeEditor.getValue());
 
     if (outputBuffer.length == 0) {
@@ -79,34 +80,11 @@ export const runRubyScriptsInHtml = function () {
   } catch (error) {
     outputTextArea.value = error;
   }
-
-  listFiles();
 };
 
 export const selectAllScripts = function () {
   codeEditor.focus();
   codeEditor.execCommand("selectAll");
-};
-
-const listFiles = function () {
-  const files = <HTMLTextAreaElement>document.getElementById("files");
-
-  const script = `def filetree(path)
-  str = "#{path}\n"
-  Dir.entries(".").each do |file|
-    if File.directory?(file)
-      str += "├─ #{file}/\n"
-    else
-      str += "├─ #{file}\n"
-    end     
-  end
-  str
-end
-
-filetree(File.expand_path(Dir.pwd))
-  `; 
-
-  files.value = browserVm.vm.eval(script).toString()
 };
 
 main();
