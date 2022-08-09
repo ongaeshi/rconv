@@ -75,10 +75,10 @@ export const runRubyScriptsInHtml = function () {
     const result = browserVm.vm.eval(codeEditor.getValue() + `; f("${input2.value}")`);
 
     if (outputBuffer.length == 0) {
-      outputTextArea.value = result.toString()
+      outputTextArea.value += result.toString() + "\n"
     }
   } catch (error) {
-    outputTextArea.value = error;
+    outputTextArea.value += error + "\n";
   }
 };
 
