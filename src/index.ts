@@ -53,6 +53,7 @@ const main = async () => {
 
   document.getElementById("run").onclick = runRubyScriptsInHtml;
   document.getElementById("clear").onclick = selectAllScripts;
+  document.getElementById("input2").onkeydown = checkRunWithKeyboard;
 
   codeEditor.focus();
 
@@ -85,5 +86,11 @@ export const selectAllScripts = function () {
   codeEditor.focus();
   codeEditor.execCommand("selectAll");
 };
+
+export const checkRunWithKeyboard = function(event: KeyboardEvent) {
+  if (event.ctrlKey && event.key == "Enter") {
+    runRubyScriptsInHtml();
+  } 
+}
 
 main();
