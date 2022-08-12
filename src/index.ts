@@ -51,6 +51,22 @@ const main = async () => {
   browserVm = new BrowserVm()
   await browserVm.createVm(printToOutput)
 
+  browserVm.vm.eval(
+    `
+class Rconv
+  def set(opt = {}, &block)
+    @conv = block
+  end
+
+  def call(arg)
+    @conv.call(arg)
+  end
+end
+
+$rconv = Rconv.new
+    `
+  )
+
   document.getElementById("run").onclick = runRubyScriptsInHtml;
   document.getElementById("clear").onclick = selectAllScripts;
   document.getElementById("input2").onkeydown = checkRunWithKeyboard;
@@ -72,7 +88,8 @@ export const runRubyScriptsInHtml = function () {
 
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
-    const result = browserVm.vm.eval(codeEditor.getValue() + `; f("${input2.value}")`);
+
+    const result = browserVm.vm.eval(codeEditor.getValue() + `; $rconv.call("${input2.value}")`)
 
     if (outputBuffer.length == 0) {
       outputTextArea.value += result.toString() + "\n"
