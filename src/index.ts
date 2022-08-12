@@ -54,16 +54,25 @@ const main = async () => {
   browserVm.vm.eval(
     `
 class Rconv
-  def set(opt = {}, &block)
-    @conv = block
+  def self.set(opt = {}, &block)
+    @conv ||= Caller.new
+    @conv.set(opt, &block)
   end
 
-  def call(arg)
+  def self.call(arg)
     @conv.call(arg)
   end
-end
 
-$rconv = Rconv.new
+  class Caller
+    def set(opt = {}, &block)
+      @conv = block
+    end
+    
+    def call(arg)
+      @conv.call(arg)
+    end
+  end
+end
     `
   )
 
@@ -89,7 +98,7 @@ export const runRubyScriptsInHtml = function () {
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
 
-    const result = browserVm.vm.eval(codeEditor.getValue() + `; $rconv.call("${input2.value}")`)
+    const result = browserVm.vm.eval(codeEditor.getValue() + `; Rconv.call("${input2.value}")`)
 
     if (outputBuffer.length == 0) {
       outputTextArea.value += result.toString() + "\n"
