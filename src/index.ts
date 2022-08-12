@@ -103,7 +103,7 @@ export const runRubyScriptsInHtml = function () {
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
 
-    const result = browserVm.vm.eval(codeEditor.getValue() + `; Rconv.call("${input2.value}")`)
+    const result = browserVm.vm.eval(codeEditor.getValue() + `; Rconv.call('${input2.value}')`)
     document.title = browserVm.vm.eval("Rconv.title").toString()
 
     if (outputBuffer.length == 0) {
