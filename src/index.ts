@@ -63,14 +63,19 @@ class Rconv
     @conv.call(arg)
   end
 
+  def self.title = @conv.title
+
   class Caller
     def set(opt = {}, &block)
+      @opt = opt
       @conv = block
     end
     
     def call(arg)
       @conv.call(arg)
     end
+
+    def title = @opt[:title] || "Rconv"
   end
 end
     `
@@ -99,6 +104,7 @@ export const runRubyScriptsInHtml = function () {
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
 
     const result = browserVm.vm.eval(codeEditor.getValue() + `; Rconv.call("${input2.value}")`)
+    document.title = browserVm.vm.eval("Rconv.title").toString()
 
     if (outputBuffer.length == 0) {
       outputTextArea.value += result.toString() + "\n"
