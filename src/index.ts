@@ -76,9 +76,11 @@ export const runRubyScriptsInHtml = function () {
 
     if (outputBuffer.length == 0) {
       outputTextArea.value += result.toString() + "\n"
+      outputTextArea.scrollTop = outputTextArea.scrollHeight
     }
   } catch (error) {
     outputTextArea.value += error + "\n";
+    outputTextArea.scrollTop = outputTextArea.scrollHeight
   }
 };
 
