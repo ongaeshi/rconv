@@ -84,6 +84,7 @@ end
   document.getElementById("run").onclick = runRubyScriptsInHtml;
   document.getElementById("clear").onclick = selectAllScripts;
   document.getElementById("input2").onkeydown = checkRunWithKeyboard;
+  document.getElementById("input2").onkeyup = runRubyScriptsInHtml;
 
   codeEditor.focus();
 
