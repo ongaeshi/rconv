@@ -107,12 +107,10 @@ export const runRubyScriptsInHtml = function () {
     document.title = browserVm.vm.eval("Rconv.title").toString()
 
     if (outputBuffer.length == 0) {
-      outputTextArea.value += result.toString() + "\n"
-      outputTextArea.scrollTop = outputTextArea.scrollHeight
+      outputTextArea.value = result.toString()
     }
   } catch (error) {
-    outputTextArea.value += error + "\n";
-    outputTextArea.scrollTop = outputTextArea.scrollHeight
+    outputTextArea.value = error
   }
 };
 
