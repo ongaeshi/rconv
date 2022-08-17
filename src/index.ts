@@ -109,7 +109,7 @@ export const runRubyScriptsInHtml = function () {
     browserVm.vm.eval(codeEditor.getValue())
     document.title = browserVm.vm.eval("Rconv.title").toString()
     input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
-    const result = browserVm.vm.eval(`Rconv.call(${input2.value})`)
+    const result = browserVm.vm.eval(`rconv_input = ${input2.value}\nRconv.call(rconv_input)`)
 
     if (outputBuffer.length == 0) {
       outputTextArea.value = result.toString()
