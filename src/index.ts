@@ -64,6 +64,7 @@ class Rconv
   end
 
   def self.title = @conv.title
+  def self.default = @conv.default
 
   class Caller
     def set(opt = {}, &block)
@@ -76,6 +77,7 @@ class Rconv
     end
 
     def title = @opt[:title] || "Rconv"
+    def default = @opt[:default] || ""
   end
 end
     `
@@ -104,8 +106,10 @@ export const runRubyScriptsInHtml = function () {
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
 
-    const result = browserVm.vm.eval(codeEditor.getValue() + `; Rconv.call(${input2.value})`)
+    const result = browserVm.vm.eval(codeEditor.getValue())
     document.title = browserVm.vm.eval("Rconv.title").toString()
+    input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
+    browserVm.vm.eval(`Rconv.call(${input2.value})`)
 
     if (outputBuffer.length == 0) {
       outputTextArea.value = result.toString()
