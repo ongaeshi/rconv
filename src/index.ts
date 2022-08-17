@@ -65,6 +65,7 @@ class Rconv
 
   def self.title = @conv.title
   def self.default = @conv.default
+  def self.always_string? = @conv.always_string?
 
   class Caller
     def set(opt = {}, &block)
@@ -78,6 +79,7 @@ class Rconv
 
     def title = @opt[:title] || "Rconv"
     def default = @opt[:default] || ""
+    def always_string? = @opt[:always_string] || false
   end
 end
     `
@@ -110,7 +112,8 @@ export const runRubyScriptsInHtml = function () {
     browserVm.vm.eval(codeEditor.getValue())
     document.title = browserVm.vm.eval("Rconv.title").toString()
     input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
-
+    alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"
+  
     const inputHeader = alwaysString.checked ? "<<'RCONV_EOS'\n" : ""
     const inputFooter = alwaysString.checked ? "RCONV_EOS\n" : ""
     const result = browserVm.vm.eval(`rconv_input = ${inputHeader}${input2.value}\n${inputFooter}Rconv.call(rconv_input)`)
