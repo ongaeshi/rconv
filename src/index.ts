@@ -105,11 +105,15 @@ export const runRubyScriptsInHtml = function () {
 
     // Run eval
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
+    const alwaysString = <HTMLInputElement>document.getElementById("always-string")
 
     browserVm.vm.eval(codeEditor.getValue())
     document.title = browserVm.vm.eval("Rconv.title").toString()
     input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
-    const result = browserVm.vm.eval(`rconv_input = ${input2.value}\nRconv.call(rconv_input)`)
+
+    const inputHeader = alwaysString.checked ? "<<'RCONV_EOS'\n" : ""
+    const inputFooter = alwaysString.checked ? "RCONV_EOS\n" : ""
+    const result = browserVm.vm.eval(`rconv_input = ${inputHeader}${input2.value}\n${inputFooter}Rconv.call(rconv_input)`)
 
     if (outputBuffer.length == 0) {
       outputTextArea.value = result.toString()
