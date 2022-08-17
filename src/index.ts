@@ -114,9 +114,10 @@ export const runRubyScriptsInHtml = function () {
     input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
     alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"
   
-    const inputHeader = alwaysString.checked ? "<<'RCONV_EOS'\n" : ""
-    const inputFooter = alwaysString.checked ? "RCONV_EOS\n" : ""
-    const result = browserVm.vm.eval(`rconv_input = ${inputHeader}${input2.value}\n${inputFooter}Rconv.call(rconv_input)`)
+    const result = browserVm.vm.eval(alwaysString.checked ?
+      `rconv_input = <<'RCONV_EOS'\n${input2.value}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
+      `rconv_input = ${input2.value}\nRconv.call(rconv_input)`
+      )
 
     if (outputBuffer.length == 0) {
       outputTextArea.value = result.toString()
