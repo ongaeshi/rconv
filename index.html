@@ -11,7 +11,7 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-light rob-navbar">
       <div class="container-fluid">
-        <a class="navbar-brand rob-navbar" href="https://rconv.ongaeshi.me">
+        <a class="navbar-brand rob-navbar" href="https://rconv.ongaeshi.me">  
           <img src="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png" alt="" width="24" class="d-inline-block align-text-top">
           Rconv
         </a>
@@ -38,18 +38,18 @@
     </nav>
     <div class="container-fluid py-2">
       <div class="row">
-        <div class="col-lg">
+        <div class="col-lg-6">
+          <textarea id="input2" class="form-control font-monospace" rows="3"></textarea>
+          <button id="run" type="button" class="btn btn-primary float-end">Run (Ctrl + Enter)</button>
+          <input id="always-string" type="checkbox"></input> <label>Always string</label>
+          <textarea id="output" class="form-control font-monospace" rows="10" readonly></textarea>
+        </div>
+        <div class="col-lg-6">
           <textarea id="input" class="form-control font-monospace" rows="10">Rconv.set(title: "Rconv", default: 1) do |e|
   e
 end
 </textarea>
           <button id="clear" type="button" class="btn btn-secondary">Select All</button>
-        </div>
-        <div class="col-lg">
-          <textarea id="input2" class="form-control font-monospace" rows="3"></textarea>
-          <button id="run" type="button" class="btn btn-primary float-end">Run (Ctrl + Enter)</button>
-          <input id="always-string" type="checkbox"></input> <label>Always string</label>
-          <textarea id="output" class="form-control font-monospace" rows="10" readonly></textarea>
         </div>
     </div>
 
