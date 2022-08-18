@@ -90,7 +90,7 @@ end
   document.getElementById("input2").onkeydown = checkRunWithKeyboard;
   document.getElementById("input2").onkeyup = runRubyScriptsInHtml;
 
-  codeEditor.focus();
+  document.getElementById("input2").focus();
 
   runRubyScriptsInHtml();
 };
