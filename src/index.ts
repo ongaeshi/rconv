@@ -118,7 +118,9 @@ export const runRubyScriptsInHtmlCustom = function (isForceRun: boolean) {
       fCodeValue = currentCode
       isForceRun = true
       browserVm.vm.eval(currentCode)
-      document.title = browserVm.vm.eval("Rconv.title").toString()
+      let t = browserVm.vm.eval("Rconv.title").toString()
+      document.title = t
+      document.getElementById("rconv-title").innerText = t
       input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
       alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"  
     }
