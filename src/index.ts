@@ -89,6 +89,7 @@ end
   document.getElementById("clear").onclick = selectAllScripts;
   document.getElementById("input2").onkeydown = checkRunWithKeyboard;
   document.getElementById("input2").onkeyup = runRubyScriptsInHtml;
+  document.getElementById("always-string").onchange = runRubyScriptsInHtml;
 
   document.getElementById("input2").focus();
 
