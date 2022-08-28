@@ -11,7 +11,8 @@ import LZString from "lz-string"
 let browserVm:BrowserVm;
 
 let outputBuffer:string[] = [];
-let inputValue:string = ""
+let fCodeValue:string = ""
+let fInputValue:string = ""
 
 const codeEditor = CodeMirror.fromTextArea(
   document.getElementById("input") as HTMLTextAreaElement,
@@ -111,18 +112,24 @@ export const runRubyScriptsInHtmlCustom = function (isForceRun: boolean) {
     const input2 = <HTMLTextAreaElement>document.getElementById("input2");
     const alwaysString = <HTMLInputElement>document.getElementById("always-string")
 
-    browserVm.vm.eval(codeEditor.getValue())
-    document.title = browserVm.vm.eval("Rconv.title").toString()
-    input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
-    alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"
+    let currentCode = codeEditor.getValue()
 
-    var currentInput = input2.value
-    if (inputValue != currentInput || isForceRun) {
-      inputValue = currentInput
+    if (fCodeValue != currentCode) {
+      fCodeValue = currentCode
+      isForceRun = true
+      browserVm.vm.eval(currentCode)
+      document.title = browserVm.vm.eval("Rconv.title").toString()
+      input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
+      alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"  
+    }
+
+    let currentInput = input2.value
+    if (fInputValue != currentInput || isForceRun) {
+      fInputValue = currentInput
 
       const result = browserVm.vm.eval(alwaysString.checked ?
-        `rconv_input = <<'RCONV_EOS'\n${inputValue}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
-        `rconv_input = ${inputValue}\nRconv.call(rconv_input)`
+        `rconv_input = <<'RCONV_EOS'\n${fInputValue}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
+        `rconv_input = ${fInputValue}\nRconv.call(rconv_input)`
         )
   
       if (outputBuffer.length == 0) {
