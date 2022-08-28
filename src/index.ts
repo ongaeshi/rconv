@@ -97,7 +97,7 @@ end
   runRubyScriptsInHtml();
 };
 
-export const runRubyScriptsInHtml = function () {
+export const runRubyScriptsInHtmlCustom = function (isForceRun: boolean) {
   outputBuffer = [];
 
   try {
@@ -117,7 +117,7 @@ export const runRubyScriptsInHtml = function () {
     alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"
 
     var currentInput = input2.value
-    if (inputValue != currentInput) {
+    if (inputValue != currentInput || isForceRun) {
       inputValue = currentInput
 
       const result = browserVm.vm.eval(alwaysString.checked ?
@@ -132,6 +132,10 @@ export const runRubyScriptsInHtml = function () {
   } catch (error) {
     outputTextArea.value = error
   }
+}
+
+export const runRubyScriptsInHtml = function () {
+  runRubyScriptsInHtmlCustom(false)
 };
 
 export const selectAllScripts = function () {
@@ -141,7 +145,7 @@ export const selectAllScripts = function () {
 
 export const checkRunWithKeyboard = function(event: KeyboardEvent) {
   if (event.ctrlKey && event.key == "Enter") {
-    runRubyScriptsInHtml();
+    runRubyScriptsInHtmlCustom(true);
   } 
 }
 
