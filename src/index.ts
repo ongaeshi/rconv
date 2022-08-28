@@ -11,6 +11,7 @@ import LZString from "lz-string"
 let browserVm:BrowserVm;
 
 let outputBuffer:string[] = [];
+let inputValue:string = ""
 
 const codeEditor = CodeMirror.fromTextArea(
   document.getElementById("input") as HTMLTextAreaElement,
@@ -114,15 +115,20 @@ export const runRubyScriptsInHtml = function () {
     document.title = browserVm.vm.eval("Rconv.title").toString()
     input2.defaultValue = browserVm.vm.eval("Rconv.default").toString()
     alwaysString.defaultChecked = browserVm.vm.eval("Rconv.always_string?").toString() === "true"
-  
-    const result = browserVm.vm.eval(alwaysString.checked ?
-      `rconv_input = <<'RCONV_EOS'\n${input2.value}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
-      `rconv_input = ${input2.value}\nRconv.call(rconv_input)`
-      )
 
-    if (outputBuffer.length == 0) {
-      outputTextArea.value = result.toString()
-    }
+    var currentInput = input2.value
+    if (inputValue != currentInput) {
+      inputValue = currentInput
+
+      const result = browserVm.vm.eval(alwaysString.checked ?
+        `rconv_input = <<'RCONV_EOS'\n${inputValue}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
+        `rconv_input = ${inputValue}\nRconv.call(rconv_input)`
+        )
+  
+      if (outputBuffer.length == 0) {
+        outputTextArea.value = result.toString()
+      }
+    }  
   } catch (error) {
     outputTextArea.value = error
   }
