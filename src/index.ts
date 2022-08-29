@@ -135,7 +135,7 @@ export const runRubyScriptsInHtmlCustom = function (isForceRun: boolean) {
 
       const result = browserVm.vm.eval(alwaysString.checked ?
         `rconv_input = <<'RCONV_EOS'\n${fInputValue}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
-        `rconv_input = ${fInputValue}\nRconv.call(rconv_input)`
+        `rconv_input = proc {\n${fInputValue}\n}.call\nRconv.call(rconv_input)`
         )
   
       if (outputBuffer.length == 0) {
