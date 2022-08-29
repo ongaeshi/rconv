@@ -28,7 +28,7 @@ const codeEditor = CodeMirror.fromTextArea(
 
 codeEditor.setOption("extraKeys", {
   "Ctrl-Enter": function(cm) {
-    runRubyScriptsInHtml()
+    runRubyScriptsForce()
   }
 });
 
@@ -88,7 +88,7 @@ end
     `
   )
 
-  document.getElementById("run").onclick = runRubyScriptsInHtml;
+  document.getElementById("run").onclick = runRubyScriptsForce;
   document.getElementById("clear").onclick = selectAllScripts;
   document.getElementById("input2").onkeydown = checkRunWithKeyboard;
   document.getElementById("input2").onkeyup = runRubyScriptsInHtml;
@@ -151,6 +151,10 @@ export const runRubyScriptsInHtml = function () {
   runRubyScriptsInHtmlCustom(false)
 };
 
+export const runRubyScriptsForce = function () {
+  runRubyScriptsInHtmlCustom(true)
+};
+
 export const selectAllScripts = function () {
   codeEditor.focus();
   codeEditor.execCommand("selectAll");
@@ -158,7 +162,7 @@ export const selectAllScripts = function () {
 
 export const checkRunWithKeyboard = function(event: KeyboardEvent) {
   if (event.ctrlKey && event.key == "Enter") {
-    runRubyScriptsInHtmlCustom(true);
+    runRubyScriptsForce();
   } 
 }
 
