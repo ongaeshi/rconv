@@ -13,6 +13,7 @@ let browserVm:BrowserVm;
 let outputBuffer:string[] = [];
 let fCodeValue:string = ""
 let fInputValue:string = ""
+let fAlwaysString:boolean = false
 
 const codeEditor = CodeMirror.fromTextArea(
   document.getElementById("input") as HTMLTextAreaElement,
@@ -126,8 +127,11 @@ export const runRubyScriptsInHtmlCustom = function (isForceRun: boolean) {
     }
 
     let currentInput = input2.value
-    if (fInputValue != currentInput || isForceRun) {
+    if (fInputValue != currentInput ||
+       isForceRun ||
+       fAlwaysString != alwaysString.checked) {
       fInputValue = currentInput
+      fAlwaysString = alwaysString.checked
 
       const result = browserVm.vm.eval(alwaysString.checked ?
         `rconv_input = <<'RCONV_EOS'\n${fInputValue}\nRCONV_EOS\nRconv.call(rconv_input.chomp)` :
