@@ -17,6 +17,18 @@ nav {
     font-size: 16px;
 }
 
+.output-frame {
+    position: relative;
+}
+
+.code-copy {
+    background-color: #e9ecef !important;
+    border-color: #e9ecef !important;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
 @media (min-width: 768px) { /* Medium(md) */
     .CodeMirror {
         height: 320px;

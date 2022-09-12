@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png">
 
     <title>Rconv</title>
@@ -42,7 +43,13 @@
           <textarea id="input2" class="form-control font-monospace" rows="3"></textarea>
           <button id="run" type="button" class="btn btn-primary float-end">Run (Ctrl + Enter)</button>
           <input id="always-string" type="checkbox"></input> <label>Always string</label>
-          <textarea id="output" class="form-control font-monospace" rows="10" readonly></textarea>
+          <div class="output-frame">
+            <div class="code-copy">
+              <span id="copy-text">Copied!</span>
+              <i id="copy" class="fa-regular fa-clipboard" aria-hidden="true"></i>
+            </div>
+            <textarea id="output" class="form-control font-monospace" rows="10" readonly></textarea>
+          </div>
         </div>
         <div class="col-lg-6">
           <textarea id="input" class="form-control font-monospace" rows="10">Rconv.set(title: "Rconv", default: 1) do |e|
@@ -54,5 +61,17 @@ end
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      document.getElementById("copy-text").style.display = 'none';
+      const copy = () => {
+        const copyText = document.querySelector("#output");
+        copyText.select();
+        document.execCommand("copy");
+        document.getElementById("copy-text").style.display = '';
+        setTimeout( () => document.getElementById("copy-text").style.display = 'none', 1000)
+      }
+
+      document.querySelector("#copy").addEventListener("click", copy)
+    </script>
   </body>
 </html>
